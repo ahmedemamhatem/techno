@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 def execute(filters=None):
     columns = [
         {"label": _("Project"), "fieldname": "project", "fieldtype": "Data", "width": 160},
-        {"label": _("Project Name"), "fieldname": "project_name", "fieldtype": "Data", "width": 160},
     ]
 
     fiscal_year = get_fiscal_year(filters)
@@ -37,7 +36,7 @@ def execute(filters=None):
 
         project_row = {
             "project": project_doc.name,
-            "project_name": project_doc.get("project_name") or project.name,
+           
             f"total_income_{month_name}": total_income,
             f"total_expenses_{month_name}": total_expenses,
             f"profit_{month_name}": profit,
