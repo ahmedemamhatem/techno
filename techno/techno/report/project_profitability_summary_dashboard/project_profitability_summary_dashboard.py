@@ -7,6 +7,9 @@ from datetime import datetime, timedelta
 def execute(filters=None):
     columns = [
         {"label": _("Project"), "fieldname": "project", "fieldtype": "Data", "width": 160},
+        {"label": _(f"Total Income"), "fieldname": f"total_income", "fieldtype": "Float", "width": 200},
+        {"label": _(f"Total Expenses"), "fieldname": f"total_expenses", "fieldtype": "Float", "width": 200},
+        {"label": _(f"Profit "), "fieldname": f"profit", "fieldtype": "Float", "width": 200},
     ]
 
     fiscal_year = get_fiscal_year(filters)
@@ -14,12 +17,6 @@ def execute(filters=None):
 
     month_name = filters.get("month_name")
     month_number = get_month_number(month_name)
-
-    columns.extend([
-        {"label": _(f"Total Income"), "fieldname": f"total_income", "fieldtype": "Currency", "width": 200},
-        {"label": _(f"Total Expenses"), "fieldname": f"total_expenses", "fieldtype": "Currency", "width": 200},
-        {"label": _(f"Profit "), "fieldname": f"profit", "fieldtype": "Currency", "width": 200},
-    ])
 
     data = []
 
@@ -36,16 +33,18 @@ def execute(filters=None):
 
         project_row = {
             "project": project_doc.name,
-           
-            f"total_income": total_income,
-            f"total_expenses": total_expenses,
-            f"profit": profit,
+            "total_income": total_income,
+            "total_expenses": total_expenses,
+            "profit": profit,
         }
 
         data.append(project_row)
-        data_sorted_by_profit = sorted(data, key=lambda x: x.get('profit', 0), reverse=True)
+
+    # Sort data by profit
+    data_sorted_by_profit = sorted(data, key=lambda x: x.get('profit', 0), reverse=True)
 
     return columns, data_sorted_by_profit
+
 
 def get_project_financials(project, start_date, end_date):
     # Fetch total credit and total expenses from GL entries for the project within the specified date range
