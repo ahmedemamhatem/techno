@@ -76,9 +76,9 @@ def get_total_income(project, start_date, end_date):
 		SELECT SUM(credit_in_account_currency) AS total_credit
 		FROM `tabGL Entry`
 		WHERE project = %s
-		  AND posting_date BETWEEN %s AND %s
-		  AND is_cancelled = 0
-	""", (project, start_date, end_date), as_dict=True)[0]['total_credit']
+		  AND posting_date <= %s
+          AND is_cancelled = 0
+    """, (project, end_date), as_dict=True)[0]['total_credit']
 
 	return total_credit or 0
 
@@ -88,9 +88,9 @@ def get_total_expenses(project, start_date, end_date):
 		SELECT SUM(debit_in_account_currency) AS total_expenses
 		FROM `tabGL Entry`
 		WHERE project = %s
-		  AND posting_date BETWEEN %s AND %s
-		  AND is_cancelled = 0
-	""", (project, start_date, end_date), as_dict=True)[0]['total_expenses']
+		  AND posting_date <= %s
+          AND is_cancelled = 0
+    """, (project, end_date), as_dict=True)[0]['total_expenses']
 
 	return total_expenses or 0
 

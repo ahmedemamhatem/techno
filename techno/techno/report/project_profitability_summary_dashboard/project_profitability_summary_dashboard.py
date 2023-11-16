@@ -16,9 +16,9 @@ def execute(filters=None):
     month_number = get_month_number(month_name)
 
     columns.extend([
-        {"label": _(f"Total Income {month_name}"), "fieldname": f"total_income_{month_name}", "fieldtype": "Currency", "width": 200},
-        {"label": _(f"Total Expenses {month_name}"), "fieldname": f"total_expenses_{month_name}", "fieldtype": "Currency", "width": 200},
-        {"label": _(f"Profit {month_name}"), "fieldname": f"profit_{month_name}", "fieldtype": "Currency", "width": 200},
+        {"label": _(f"Total Income"), "fieldname": f"total_income", "fieldtype": "Currency", "width": 200},
+        {"label": _(f"Total Expenses {month_name}"), "fieldname": f"total_expenses", "fieldtype": "Currency", "width": 200},
+        {"label": _(f"Profit {month_name}"), "fieldname": f"profit", "fieldtype": "Currency", "width": 200},
     ])
 
     data = []
@@ -37,9 +37,9 @@ def execute(filters=None):
         project_row = {
             "project": project_doc.name,
            
-            f"total_income_{month_name}": total_income,
-            f"total_expenses_{month_name}": total_expenses,
-            f"profit_{month_name}": profit,
+            f"total_income": total_income,
+            f"total_expenses_": total_expenses,
+            f"profit": profit,
         }
 
         data.append(project_row)
@@ -54,9 +54,9 @@ def get_project_financials(project, start_date, end_date):
             SUM(debit_in_account_currency) AS total_expenses
         FROM `tabGL Entry`
         WHERE project = %s
-          AND posting_date BETWEEN %s AND %s
+          AND posting_date <= %s
           AND is_cancelled = 0
-    """, (project, start_date, end_date), as_dict=True)[0]
+    """, (project, end_date), as_dict=True)[0]
 
     return result['total_credit'] or 0, result['total_expenses'] or 0
 
