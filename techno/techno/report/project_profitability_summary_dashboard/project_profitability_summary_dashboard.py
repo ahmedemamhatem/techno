@@ -38,13 +38,14 @@ def execute(filters=None):
             "project": project_doc.name,
            
             f"total_income": total_income,
-            f"total_expenses_": total_expenses,
+            f"total_expenses": total_expenses,
             f"profit": profit,
         }
 
         data.append(project_row)
+        data_sorted_by_profit = sorted(data, key=lambda x: x.get('profit', 0), reverse=True)
 
-    return columns, data
+    return columns, data_sorted_by_profit
 
 def get_project_financials(project, start_date, end_date):
     # Fetch total credit and total expenses from GL entries for the project within the specified date range

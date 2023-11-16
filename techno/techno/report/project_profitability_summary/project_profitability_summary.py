@@ -48,8 +48,9 @@ def execute(filters=None):
             project_row[f"profit_{month_name}"] = profit
 
         data.append(project_row)  # Append project_row to the data list
+        data_sorted_by_profit = sorted(data, key=lambda x: x.get('profit', 0), reverse=True)
 
-    return columns, data
+    return columns, data_sorted_by_profit
 
 
 def get_fiscal_year(filters):
