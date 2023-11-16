@@ -17,8 +17,8 @@ def execute(filters=None):
 
     columns.extend([
         {"label": _(f"Total Income"), "fieldname": f"total_income", "fieldtype": "Currency", "width": 200},
-        {"label": _(f"Total Expenses {month_name}"), "fieldname": f"total_expenses", "fieldtype": "Currency", "width": 200},
-        {"label": _(f"Profit {month_name}"), "fieldname": f"profit", "fieldtype": "Currency", "width": 200},
+        {"label": _(f"Total Expenses"), "fieldname": f"total_expenses", "fieldtype": "Currency", "width": 200},
+        {"label": _(f"Profit "), "fieldname": f"profit", "fieldtype": "Currency", "width": 200},
     ])
 
     data = []
