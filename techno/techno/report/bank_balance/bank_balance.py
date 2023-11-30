@@ -20,9 +20,7 @@ from frappe.utils import (
 	nowdate,
 )
 from six import string_types
-
 import erpnext
-
 # imported to enable erpnext.accounts.utils.get_account_currency
 from erpnext.accounts.doctype.account.account import get_account_currency  # noqa
 from erpnext.stock import get_warehouse_account_map
